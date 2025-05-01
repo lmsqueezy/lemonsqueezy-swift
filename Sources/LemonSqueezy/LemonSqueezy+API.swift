@@ -1,5 +1,26 @@
 import Foundation
 
+class CustomURLSessionDelegate: NSObject, URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+            if let serverTrust = challenge.protectionSpace.serverTrust {
+                let credential = URLCredential(trust: serverTrust)
+                completionHandler(.useCredential, credential)
+                return
+            }
+        }
+        completionHandler(.performDefaultHandling, nil)
+    }
+}
+
+let customDelegate = CustomURLSessionDelegate()
+
+// Create a shared URLSession with the custom delegate
+let customSession: URLSession = {
+    let configuration = URLSessionConfiguration.default
+    return URLSession(configuration: configuration, delegate: customDelegate, delegateQueue: nil)
+}()
+
 extension LemonSqueezy {
     internal func call<T: Codable>(
         route: APIRoute,
@@ -17,7 +38,12 @@ extension LemonSqueezy {
 
         signURLRequest(method: method, body: body, request: &request)
 
-        let (data, _) = try await URLSession.shared.data(for: request)
+        #if DEBUG
+            let (data, _) = try await customSession.data(for: request)
+        #else
+            let (data, _) = try await URLSession.shared.data(for: request)
+        #endif
+        
         return try decodeOrThrow(decodingType: T.self, data: data)
     }
 }
