@@ -18,6 +18,27 @@ extension LemonSqueezy {
         return try await call(route: .customer(customerId), queryItems: queryItems)
     }
     
+    /// Create a customer.
+    ///
+    /// - Parameters:
+    ///    - body: A dictionary containing the fields to create a customer.
+    /// - Returns: A response object containing the requested ``Customer``.
+    public func createCustomer(body: [String: Any]) async throws -> LemonSqueezyAPIDataAndIncluded<Customer, Customer.Included> {
+        let serializedBody = try JSONSerialization.data(withJSONObject: body)
+        return try await call(route: .customers, method: .POST, queryItems: [], body: serializedBody)
+    }
+    
+    /// Update a customer.
+    ///
+    /// - Parameters:
+    ///    - customerId: The ID of the customer you'd like to update.
+    ///    - body: A dictionary containing the fields to update. See: https://docs.lemonsqueezy.com/api/customers/update-customer
+    /// - Returns: A response object containing the requested ``Customer``.
+    public func updateCustomer(_ customerId: Customer.ID, body: [String: Any]) async throws -> LemonSqueezyAPIDataAndIncluded<Customer, Customer.Included> {
+        let serializedBody = try JSONSerialization.data(withJSONObject: body)
+        return try await call(route: .customer(customerId), method: .PATCH, queryItems: [], body: serializedBody)
+    }
+    
     /// Returns a list of customers.
     /// - Parameters:
     ///    - pageNumber: The page number to return the response for.
