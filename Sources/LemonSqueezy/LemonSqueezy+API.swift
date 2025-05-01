@@ -94,6 +94,9 @@ extension LemonSqueezy {
 
         case orders
         case order(_ orderId: Order.ID)
+        
+        case affiliates
+        case affiliate(_ affiliateId: Affiliate.ID)
 
         case stores
         case store(_ storeId: Store.ID)
@@ -155,6 +158,10 @@ extension LemonSqueezy {
             switch self {
             case .me:
                 return (path: "/v1/users/me", queryItems: nil)
+            case .affiliate(let id):
+              return (path: "/v1/affiliates/\(id)", queryItems: nil)
+            case .affiliates:
+              return (path: "/v1/affiliates", queryItems: nil)
             case .order(let id):
               return (path: "/v1/orders/\(id)", queryItems: nil)
             case .orders:
