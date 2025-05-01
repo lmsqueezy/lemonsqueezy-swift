@@ -18,6 +18,11 @@ extension LemonSqueezy {
         return try await call(route: .licenseKey(licenseKeyId), queryItems: queryItems)
     }
     
+    public func updateLicenseKey(_ licenseKeyId: LicenseKey.ID,body : [String: Any]) async throws -> LemonSqueezyAPIDataAndIncluded<LicenseKey, LicenseKey.Included> {
+        let serializedBody = try JSONSerialization.data(withJSONObject: body)
+        return try await call(route: .licenseKey(licenseKeyId), method: .PATCH, queryItems: [], body: serializedBody)
+    }
+    
     /// Returns a list of license keys.
     /// - Parameters:
     ///    - pageNumber: The page number to return the response for.

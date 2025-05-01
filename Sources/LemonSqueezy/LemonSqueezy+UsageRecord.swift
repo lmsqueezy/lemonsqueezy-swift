@@ -18,6 +18,16 @@ extension LemonSqueezy {
         return try await call(route: .usageRecord(usageRecordId), queryItems: queryItems)
     }
     
+    /// Create a usage record.
+    ///
+    /// - Parameters:
+    ///    - body: A dictionary containing the fields to create a usage record. See https://docs.lemonsqueezy.com/api/usage-records/create-usage-record
+    /// - Returns: A response object containing the requested ``UsageRecord``.
+    public func createUsageRecord(body: [String: Any]) async throws -> LemonSqueezyAPIDataAndIncluded<UsageRecord, UsageRecord.Included> {
+        let serializedBody = try JSONSerialization.data(withJSONObject: body)
+        return try await call(route: .usageRecords, method: .POST, queryItems: [], body: serializedBody)
+    }
+    
     /// Returns a list of usage records.
     /// - Parameters:
     ///    - pageNumber: The page number to return the response for.

@@ -56,7 +56,23 @@ extension Price {
         
         /// A positive integer in cents representing the price.
         /// Not used for volume and graduated pricing (tier data is used instead).
-        public let unitPrice: Int
+        ///
+        /// If `usageAggregation` is enabled for this price, `unitPrice` will be null and `unitPriceDecimal` will be used instead.
+        public let unitPrice: Int?
+        
+        /// A positive decimal string in cents representing the price.
+        /// Not used for volume and graduated pricing (tier data is used instead).
+        ///
+        /// If `usageAggregation` is not enabled for this price, `unitPriceDecimal` will be null and `unitPrice` will be used instead.
+        public let unitPriceDecimal: Int?
+        
+        /// A boolean indicating if the price has a setup fee.
+        /// Will be `null` for non-subscription pricing.
+        public let setupFeeEnabled: Bool?
+        
+        /// A positive integer in cents representing the setup fee.
+        /// Will be `null` for non-subscription pricing.
+        public let setupFee: Int?
         
         /// The number of units included in each package when using package pricing.
         /// Will be `1` for standard, graduated and volume pricing.
@@ -145,8 +161,11 @@ extension Price {
         /// The top limit of this tier. Will be an integer or `"inf"` (for "infinite") if this is the highest-level tier.
         public let lastUnit: LastUnit
         
-        /// A positive integer in cents representing the price of each unit.
+        /// A positive integer in cents representing the price of each unit. Will be `null` if usage-based billing is activated on this price’s variant.
         public let unitPrice: Int
+        
+        /// A positive decimal string in cents representing the price of each unit. Will be `null` if usage-based billing is not activated on this price’s variant.
+        public let unitPriceDecimal: Int?
         
         /// An optional fixed fee charged alongside the unit price.
         public let fixedFee: Int
