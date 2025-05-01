@@ -50,6 +50,9 @@ extension Order {
         /// A positive integer in cents representing the subtotal of the order in the order currency.
         public let subtotal: Int
         
+        /// A positive integer in cents representing the setup fee of the order in the order currency.
+        public let setupFee: Int
+        
         /// A positive integer in cents representing the total discount value applied to the order in the order currency.
         public let discountTotal: Int
         
@@ -59,8 +62,14 @@ extension Order {
         /// A positive integer in cents representing the total cost of the order in the order currency.
         public let total: Int
         
+        /// A positive integer in cents representing the refunded amount of the order in the order currency.
+        public let refundedAmount: Int
+        
         /// A positive integer in cents representing the subtotal of the order in USD.
         public let subtotalUsd: Int
+        
+        /// A positive integer in cents representing the setup fee of the order in USD.
+        public let setupFeeUsd: Int
         
         /// A positive integer in cents representing the total discount value applied to the order in USD.
         public let discountTotalUsd: Int
@@ -71,13 +80,19 @@ extension Order {
         /// A positive integer in cents representing the total cost of the order in USD.
         public let totalUsd: Int
         
+        /// A positive integer in cents representing the refunded amount of the order in USD.
+        public let refundedAmountUsd: Int
+        
         /// If tax is applied to the order, this will be the name of the tax rate (e.g. `VAT`, `Sales Tax`, etc).
         public let taxName: String?
         
         /// If tax is applied to the order, this will be the rate of tax as a decimal percentage.
         public let taxRate: String
         
-        /// The status of the order. One of `pending`, `failed`, `paid`, `refunded`.
+        /// A boolean indicating if the order was created with tax inclusive or exclusive pricing.
+        public let taxInclusive: Bool
+        
+        /// The status of the order. One of `pending`, `failed`, `paid`, `refunded`, `partial_refund`, `fraudulent`.
         public let status: String
         
         /// The formatted status of the order.
@@ -92,6 +107,9 @@ extension Order {
         /// A human-readable string representing the subtotal of the order in the order currency (e.g. $9.99).
         public let subtotalFormatted: String
         
+        /// A human-readable string representing the setup fee of the order in the order currency (e.g. $9.99).
+        public let setupFeeFormatted: String
+        
         /// A human-readable string representing the total discount value applied to the order in the order currency (e.g. $9.99).
         public let discountTotalFormatted: String
         
@@ -101,8 +119,11 @@ extension Order {
         /// A human-readable string representing the total cost of the order in the order currency (e.g. $9.99).
         public let totalFormatted: String
         
+        /// A human-readable string representing the refunded amount of the order in the order currency (e.g. $9.99).
+        public let refundedAmountFormatted: String
+        
         /// An object representing the first [order item](https://docs.lemonsqueezy.com/api/order-items) belonging to this order.
-        //public let firstOrderItem: FirstOrderItem
+        public let firstOrderItem: FirstOrderItem?
         
         /// An object of customer-facing URLs for this order.
         public let urls: Urls
@@ -112,10 +133,16 @@ extension Order {
         
         /// An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) formatted date-time string indicating when the object was last updated.
         public let updatedAt: String
+        
+        /// A boolean indicating if the object was created within test mode.
+        public let testMode: Bool
     }
     
     /// An object containing first order item from the order.
     public struct FirstOrderItem: Codable {
+        /// The ID of the order item.
+        public let id: Int
+        
         /// The ID of the order.
         public let orderId: Int
         
@@ -139,6 +166,9 @@ extension Order {
         
         /// An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) formatted date-time string indicating when the object was last updated.
         public let updatedAt: String
+        
+        /// A boolean indicating if the object was created within test mode.
+        public let testMode: Bool
     }
     
     public struct Urls: Codable {

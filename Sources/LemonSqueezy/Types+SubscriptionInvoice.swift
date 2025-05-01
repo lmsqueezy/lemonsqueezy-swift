@@ -20,7 +20,6 @@ public struct SubscriptionInvoice: Codable, Identifiable {
     public let attributes: Attributes
 }
 
-
 extension SubscriptionInvoice {
     public struct APIResponse: Codable {
         let data: SubscriptionInvoice
@@ -66,6 +65,7 @@ extension SubscriptionInvoice {
         ///  - `paid` - The invoice has been paid.
         ///  - `void` - The invoice was cancelled or cannot be paid.
         ///  - `refunded` - The invoice was paid but has since been fully refunded.
+        ///  - `partial_refund` - The invoice was paid but has since been partially refunded.
         public let status: String
         
         /// The formatted status of the invoice.
@@ -86,8 +86,14 @@ extension SubscriptionInvoice {
         /// A positive integer in cents representing the tax applied to the order in the invoice currency.
         public let tax: Int
         
+        /// A boolean indicating if the order was created with tax inclusive or exclusive pricing.
+        public let taxInclusive: Bool
+        
         /// A positive integer in cents representing the total cost of the order in the invoice currency.
         public let total: Int
+        
+        /// A positive integer in cents representing the refunded amount of the invoice in the invoice currency.
+        public let refundedAmount: Int
         
         /// A positive integer in cents representing the subtotal of the order in USD.
         public let subtotalUsd: Int
@@ -101,6 +107,9 @@ extension SubscriptionInvoice {
         /// A positive integer in cents representing the total cost of the order in USD.
         public let totalUsd: Int
         
+        /// A positive integer in cents representing the refunded amount of the invoice in USD.
+        public let refundedAmountUsd: Int
+        
         /// A human-readable string representing the subtotal of the order in the order currency (e.g. $9.99).
         public let subtotalFormatted: String
         
@@ -112,6 +121,9 @@ extension SubscriptionInvoice {
         
         /// A human-readable string representing the total cost of the order in the order currency (e.g. $9.99).
         public let totalFormatted: String
+        
+        /// A human-readable string representing the refunded amount of the invoice in the invoice currency (e.g. $9.99).
+        public let refundedAmountFormatted: String
         
         /// An object of customer-facing URLs for the invoice.
         public let urls: Urls

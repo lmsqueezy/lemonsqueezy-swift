@@ -58,7 +58,7 @@ extension Subscription {
         /// The email address of the customer.
         public let userEmail: String
 
-        /// The status of the subscription. One of `on_trial`, `active`, `cancelled`, `expired`.
+        /// The status of the subscription. One of `on_trial`, `active`, `paused`, `past_due`, `unpaid`, `cancelled`, `expired`.
         public let status: String
 
         /// The formatted status of the subscription.
@@ -83,7 +83,7 @@ extension Subscription {
         public let billingAnchor: Int
         
         /// An object representing the first [subscription item](https://docs.lemonsqueezy.com/api/subscription-items) belonging to this subscription.
-        public let firstSubscriptionItem: FirstSubscriptionItem
+        public let firstSubscriptionItem: FirstSubscriptionItem?
 
         /// An object of customer-facing URLs for managing the subscription.
         public let urls: Urls
@@ -143,6 +143,9 @@ extension Subscription {
         
         /// A pre-signed URL to the [Customer Portal](https://docs.lemonsqueezy.com/help/online-store/customer-portal), which allows customers to fully manage their subscriptions and billing information from within your application. The URL is valid for 24 hours from time of request.
         public let customerPortal: String
+
+        /// A pre-signed URL for upgrading/downgrading the subscription in the [Customer Portal](https://docs.lemonsqueezy.com/help/online-store/customer-portal). This is only used for subscriptions setup through PayPal payment and will return null on all other payment types. The URL is valid for 24 hours from time of request.
+        public let customerPortalUpdateSubscription: String
     }
 }
 

@@ -18,11 +18,22 @@ extension LemonSqueezy {
         return try await call(route: .subscription(subscriptionId), queryItems: queryItems)
     }
     
+    /// Update subscription by ID.
+    ///
+    /// - Parameters:
+    ///    - subscriptionId: The ID of the subscription you'd like to update.
+    ///    - body: A dictionary containing the fields to update. See: https://docs.lemonsqueezy.com/api/subscriptions/update-subscription
+    /// - Returns: A response object containing the requested ``Subscription``.
     public func updateSubscription(_ subscriptionId: Subscription.ID, body: [String: Any]) async throws -> LemonSqueezyAPIDataAndIncluded<Subscription, Subscription.Included> {
         let serializedBody = try JSONSerialization.data(withJSONObject: body)
         return try await call(route: .subscription(subscriptionId), method: .PATCH, queryItems: [], body: serializedBody)
     }
     
+    /// Cancel subscription by ID.
+    ///
+    /// - Parameters:
+    ///    - subscriptionId: The ID of the subscription you'd like to cancel.
+    /// - Returns: A response object containing the requested ``Subscription``.
     public func cancelSubscription(_ subscriptionId: Subscription.ID) async throws -> LemonSqueezyAPIDataAndIncluded<Subscription, Subscription.Included> {
         return try await call(route: .subscription(subscriptionId), method: .DELETE, queryItems: [])
     }

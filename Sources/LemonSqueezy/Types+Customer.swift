@@ -87,7 +87,7 @@ extension Customer {
     
     public struct Urls: Codable {
         /// A pre-signed URL to the [Customer Portal](https://docs.lemonsqueezy.com/help/online-store/customer-portal), which allows customers to fully manage their subscriptions and billing information from within your application. The URL is valid for 24 hours from time of request. Will be null if the customer has not bought a subscription in your store.
-        public let customerPortal: String
+        public let customerPortal: String?
     }
 
 }

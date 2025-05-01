@@ -103,14 +103,48 @@ extension Checkout {
         /// If false, hide the discount code field
         public let discount: Bool
         
+        /// If `true`, removes the free trial.
+        public let skipTrial: Bool?
+        
         /// If true, use the dark theme
-        public let dark: Bool
+        @available(*, deprecated, message: "This property is deprecated and will be removed in future versions.")
+        public let dark: Bool?
         
         /// If false, hide the "You will be charged..." subscription preview text
         public let subscriptionPreview: Bool
         
+        /// A custom hex color to use for the background of the checkout page.
+        public let backgroundColor: String?
+        
+        /// A custom hex color to use for the headings on the checkout page.
+        public let headingsColor: String?
+        
+        /// A custom hex color to use for the primary text on the checkout page.
+        public let primaryTextColor: String?
+        
+        /// A custom hex color to use for the secondary text on the checkout page.
+        public let secondaryTextColor: String?
+        
+        /// A custom hex color to use for the links on the checkout page.
+        public let linksColor: String?
+        
+        /// A custom hex color to use for the borders on the checkout page.
+        public let bordersColor: String?
+        
+        /// A custom hex color to use for the checkboxes on the checkout page.
+        public let checkboxColor: String?
+        
+        /// A custom hex color to indicate an active state on the checkout page.
+        public let activeStateColor: String?
+        
         /// A custom hex color to use for the checkout button
-        public let buttonColor: String
+        public let buttonColor: String?
+        
+        /// A custom hex color to use for the text within the checkout button.
+        public let buttonTextColor: String?
+        
+        /// A custom hex color to use for the terms and privacy text on the checkout page.
+        public let termsPrivacyColor: String?
     }
     
     public struct CheckoutData: Codable {
